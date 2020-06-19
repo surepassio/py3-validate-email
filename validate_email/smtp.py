@@ -26,3 +26,8 @@ class SocksSMTP(smtplib.SMTP):
             (host, port), timeout=timeout, source_address=self.source_address, proxy_type=self.proxy_type,
             proxy_addr=self.proxy_addr, proxy_port=self.proxy_port, proxy_rdns=self.proxy_rdns,
             proxy_username=self.proxy_username, proxy_password=self.proxy_password, socket_options=self.socket_options)
+
+
+class SocksSMTPSSL(SocksSMTP, smtplib.SMTP_SSL):
+
+    pass
