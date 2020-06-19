@@ -76,10 +76,10 @@ def _check_one_mx(
 def _check_mx_records(
     mx_records: list, smtp_timeout: int, helo_host: str,
     from_address: EmailAddress, email_address: EmailAddress,
-    debug: bool,
+    debug: bool, smtp: SMTP = None
 ) -> Optional[bool]:
     'Check the mx records for a given email address.'
-    smtp = SMTP(timeout=smtp_timeout)
+    smtp = smtp or SMTP(timeout=smtp_timeout)
     smtp.set_debuglevel(debuglevel=2 if debug else False)
     error_messages = []
     found_ambigious = False
@@ -101,7 +101,7 @@ def mx_check(
     email_address: EmailAddress, debug: bool,
     from_address: Optional[EmailAddress] = None,
     helo_host: Optional[str] = None, smtp_timeout: int = 10,
-    dns_timeout: int = 10
+    dns_timeout: int = 10, smtp: SMTP = None
 ) -> Optional[bool]:
     """
     Return `True` if the host responds with a deliverable response code,
@@ -118,4 +118,4 @@ def mx_check(
             domain=email_address.domain, timeout=dns_timeout)
     return _check_mx_records(
         mx_records=mx_records, smtp_timeout=smtp_timeout, helo_host=host,
-        from_address=from_address, email_address=email_address, debug=debug)
+        from_address=from_address, email_address=email_address, debug=debug, smtp=smtp)
