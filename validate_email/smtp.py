@@ -28,6 +28,6 @@ class SocksSMTP(smtplib.SMTP):
             proxy_username=self.proxy_username, proxy_password=self.proxy_password, socket_options=self.socket_options)
 
 
-class SocksSMTPSSL(SocksSMTP, smtplib.SMTP_SSL):
+class SocksSMTPSSL(smtplib.SMTP_SSL, SocksSMTP):
 
     pass
