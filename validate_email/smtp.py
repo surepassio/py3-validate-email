@@ -5,9 +5,10 @@ import smtplib
 
 class SocksSMTP(smtplib.SMTP):
 
-    def __init__(self,host='', port=0, local_hostname=None, timeout=socket._GLOBAL_DEFAULT_TIMEOUT,
+    def __init__(self, host='', port=0, local_hostname=None, timeout=socket._GLOBAL_DEFAULT_TIMEOUT,
                  source_address=None, proxy_type=None, proxy_addr=None, proxy_port=None, proxy_rdns=True,
                  proxy_username=None, proxy_password=None, socket_options=None):
+        self._port = port
         self.proxy_type = proxy_type
         self.proxy_addr = proxy_addr
         self.proxy_port = proxy_port
@@ -18,6 +19,9 @@ class SocksSMTP(smtplib.SMTP):
         if self.proxy_type:
             self._get_socket = self.socks_get_socket
         super().__init__(host, port, local_hostname, timeout, source_address)
+
+    def connect(self, host='localhost', port=0, source_address=None):
+        return super().connect(host=host, port=port or self._port, source_address=source_address)
 
     def socks_get_socket(self, host, port, timeout):
         if self.debuglevel > 0:
