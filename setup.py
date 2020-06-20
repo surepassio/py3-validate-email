@@ -15,7 +15,7 @@ def run_initial_updater(path: Path):
     orig_dont_write_bytecode = sys.dont_write_bytecode
     sys.dont_write_bytecode = True
     try:
-        from updater import BLACKLIST_FILEPATH_INSTALLED, BlacklistUpdater
+        from validate_email.updater import BLACKLIST_FILEPATH_INSTALLED, BlacklistUpdater
         log.info(f'downloading blacklist to {BLACKLIST_FILEPATH_INSTALLED}')
         BlacklistUpdater()._install()
     finally:
